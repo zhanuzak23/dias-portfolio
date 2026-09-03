@@ -16,7 +16,7 @@ window.CONTENT = {
   meta: {
     title: "Диас Жанұзақ — Product Designer",
     description: "Портфолио продуктового дизайнера. Кейсы, навыки, контакты.",
-    url: ""                       // напр. "https://dias.vercel.app" — для og:url
+    url: "https://zhanuzak23.github.io/dias-portfolio/"   // для og:url при шаринге ссылки
   },
 
   /* -------------------------------------------------------------- PERSON */

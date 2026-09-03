@@ -295,6 +295,16 @@
     document.title = pageTitle || data.meta.title;
     var d = document.querySelector('meta[name="description"]');
     if (d) d.setAttribute("content", data.meta.description);
+
+    if (has(data.meta.url)) {
+      var og = document.querySelector('meta[property="og:url"]');
+      if (!og) {
+        og = document.createElement("meta");
+        og.setAttribute("property", "og:url");
+        document.head.appendChild(og);
+      }
+      og.setAttribute("content", data.meta.url);
+    }
   }
 
   global.UI = {
