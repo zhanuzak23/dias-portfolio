@@ -157,10 +157,10 @@
       : notFound(id);
 
     document.getElementById("app").innerHTML =
-      UI.topbar(D) +
+      UI.menubar(D) +
       "<main>" + main + "</main>" +
       UI.footer(D) +
-      UI.dock(D);
+      UI.toastEl();
 
     UI.initBehaviour();
   }

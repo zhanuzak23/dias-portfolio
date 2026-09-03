@@ -62,9 +62,9 @@
   function qs(sel, root) { return (root || document).querySelector(sel); }
 
   /** Заглушка «место для фото». Показывается, пока src пустой. */
-  function placeholder(hint, title, isStatic) {
+  function placeholder(hint, title) {
     return '' +
-      '<div class="ph' + (isStatic ? " ph--static" : "") + '">' +
+      '<div class="ph">' +
         '<span class="ph__ico">' + ICONS.image + '</span>' +
         '<span class="ph__title">' + esc(title || "Место для фото") + '</span>' +
         (has(hint) ? '<span class="ph__hint">' + esc(hint) + '</span>' : "") +
@@ -117,75 +117,49 @@
     return String(u).replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/$/, "");
   }
 
-  /* ------------------------------------------------------------ ШАПКА */
-  function topbar(data) {
+  /* ----------------------------------------------------------- МЕНЮ-БАР */
+  function menubar(data) {
     var c = data.contacts;
-    var links = [
-      { t: "Кейсы",    href: "index.html#cases",    always: true },
-      { t: "Скиллы",   href: "index.html#skills",   always: true },
-      { t: "Контакты", href: "index.html#contacts", always: true },
-      { t: "CV",       href: c.cv },
-      { t: "LinkedIn", href: c.linkedin }
-    ];
 
-    var nav = links.map(function (l) {
-      if (l.always) return '<a class="topnav__link" href="' + esc(l.href) + '">' + esc(l.t) + '</a>';
-      if (has(l.href)) {
-        return '<a class="topnav__link" href="' + esc(l.href) + '" target="_blank" rel="noopener">' + esc(l.t) + '</a>';
-      }
-      return '<span class="topnav__link is-soon" title="Скоро добавлю">' + esc(l.t) + ' · скоро</span>';
+    var nav = [
+      { t: "Кейсы",    href: "index.html#cases" },
+      { t: "Скиллы",   href: "index.html#skills" },
+      { t: "Контакты", href: "index.html#contacts" }
+    ].map(function (l) {
+      return '<a class="menubar__link" href="' + esc(l.href) + '">' + esc(l.t) + "</a>";
     }).join("");
 
+    /* в баре показываем только заполненные контакты — пустые не мусорят */
+    var btns = contactList(c).filter(function (it) { return has(it.value); }).map(function (it) {
+      if (it.action === "copy") {
+        return '<button class="menubar__btn" data-tip="' + esc(it.value) + '" data-copy="' + esc(it.copy) +
+               '" aria-label="Скопировать ' + esc(it.label) + '">' + it.icon + "</button>";
+      }
+      return '<a class="menubar__btn" data-tip="' + esc(it.label) + '" href="' + esc(it.href) +
+             '" target="_blank" rel="noopener" aria-label="' + esc(it.label) + '">' + it.icon + "</a>";
+    }).join("");
+
+    var ctaHref = has(c.telegram) ? c.telegram : (has(c.email) ? "mailto:" + c.email : "index.html#contacts");
+    var ctaExt = has(c.telegram) ? ' target="_blank" rel="noopener"' : "";
+    var cta = '<a class="menubar__cta" href="' + esc(ctaHref) + '"' + ctaExt + ">Связаться</a>";
+
     return '' +
-      '<header class="topbar" id="topbar">' +
-        '<div class="container topbar__inner">' +
-          '<a class="brand" href="index.html">' +
-            '<span class="brand__dot"></span>' +
-            '<span>' + esc(data.person.name) + '</span>' +
-            '<span class="brand__role">— ' + esc(data.person.role) + '</span>' +
-          '</a>' +
-          '<nav class="topnav">' + nav + '</nav>' +
-        '</div>' +
-      '</header>';
+      '<header class="menubar" id="menubar">' +
+        '<div class="container menubar__inner">' +
+          '<a class="menubar__brand" href="index.html">' +
+            '<span class="menubar__dot"></span>' +
+            "<span>" + esc(data.person.name) + "</span>" +
+            '<span class="menubar__role">' + esc(data.person.role) + "</span>" +
+          "</a>" +
+          '<nav class="menubar__nav">' + nav + "</nav>" +
+          '<span class="menubar__sep"></span>' +
+          '<div class="menubar__actions">' + btns + cta + "</div>" +
+        "</div>" +
+      "</header>";
   }
 
-  /* -------------------------------------------------------------- ДОК */
-  function dock(data) {
-    var c = data.contacts;
-    var items = contactList(c);
-    var primary = has(c.telegram)
-      ? { href: c.telegram, ext: true }
-      : (has(c.email) ? { href: "mailto:" + c.email, ext: false } : null);
-
-    var cta = primary
-      ? '<a class="dock__cta" href="' + esc(primary.href) + '"' + (primary.ext ? ' target="_blank" rel="noopener"' : "") + '>' +
-          ICONS.sparkle + '<span>Связаться</span></a>'
-      : '<a class="dock__cta" href="index.html#contacts">' + ICONS.sparkle + '<span>Связаться</span></a>';
-
-    var btns = items.map(function (it) {
-      var soon = !has(it.value);
-      if (soon) {
-        return '<button class="dock__btn" data-tip="' + esc(it.label) + ' · скоро" disabled aria-label="' + esc(it.label) + ' скоро">' + it.icon + '</button>';
-      }
-      if (it.action === "copy") {
-        return '<button class="dock__btn" data-tip="' + esc(it.value) + '" data-copy="' + esc(it.copy) + '" aria-label="Скопировать ' + esc(it.label) + '">' + it.icon + '</button>';
-      }
-      return '<a class="dock__btn" data-tip="' + esc(it.label) + '" href="' + esc(it.href) + '" target="_blank" rel="noopener" aria-label="' + esc(it.label) + '">' + it.icon + '</a>';
-    }).join("");
-
-    var avatar = has(data.person.photo)
-      ? '<span class="dock__avatar"><img src="' + esc(data.person.photo) + '" alt=""></span>'
-      : '<span class="dock__avatar">' + esc(data.person.initials) + '</span>';
-
-    return '' +
-      '<div class="dock" id="dock">' +
-        cta +
-        '<span class="dock__sep"></span>' +
-        btns +
-        '<span class="dock__sep dock__sep--tail"></span>' +
-        avatar +
-      '</div>' +
-      '<div class="toast" id="toast" role="status" aria-live="polite"></div>';
+  function toastEl() {
+    return '<div class="toast" id="toast" role="status" aria-live="polite"></div>';
   }
 
   /* ------------------------------------------------------------ ПОДВАЛ */
@@ -243,24 +217,12 @@
       copyText(el.getAttribute("data-copy"));
     });
 
-    /* липкая шапка */
-    var bar = qs("#topbar");
+    /* липкий меню-бар */
+    var bar = qs("#menubar");
     if (bar) {
       var onScroll = function () { bar.classList.toggle("is-stuck", window.scrollY > 8); };
       onScroll();
       window.addEventListener("scroll", onScroll, { passive: true });
-    }
-
-    /* док прячется в самом низу страницы, чтобы не перекрывать подвал */
-    var d = qs("#dock");
-    if (d) {
-      var onDock = function () {
-        var bottom = window.scrollY + window.innerHeight;
-        d.classList.toggle("is-hidden", bottom > document.body.scrollHeight - 60);
-      };
-      onDock();
-      window.addEventListener("scroll", onDock, { passive: true });
-      window.addEventListener("resize", onDock);
     }
 
     /* появление блоков при скролле */
@@ -316,8 +278,8 @@
     media: media,
     contactList: contactList,
     prettyUrl: prettyUrl,
-    topbar: topbar,
-    dock: dock,
+    menubar: menubar,
+    toastEl: toastEl,
     footer: footer,
     toast: toast,
     copyText: copyText,
