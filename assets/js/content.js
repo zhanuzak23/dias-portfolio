@@ -50,8 +50,8 @@ window.CONTENT = {
   /* контактов с пометкой «скоро».                                          */
   contacts: {
     phone:    "+7 708 175 39 74",
-    email:    "",                   // напр. "dias@mail.com"
-    telegram: "",                   // напр. "https://t.me/username"
+    email:    "zhanuzak.dias@mail.ru",
+    telegram: "https://t.me/zhanuzak23",
     linkedin: "",                   // пришлёшь позже
     cv:       "",                   // напр. "assets/files/cv.pdf"
     behance:  "",
@@ -344,7 +344,7 @@ window.CONTENT = {
     ],
 
     toolsLabel: "Инструменты",
-    tools: ["Figma", "FigJam", "Maze", "Lottie", "Framer", "Miro"],
+    tools: ["Figma", "FigJam", "Claude Code", "ChatGPT"],
 
     experienceLabel: "Опыт",
     experience: [

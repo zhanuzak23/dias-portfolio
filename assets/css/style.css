@@ -288,13 +288,35 @@ body::before{
 .case:hover .case__cta{color:var(--accent);gap:12px}
 
 /* ---------- 8. SKILLS ---------------------------------------------------- */
-.skillgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5) var(--s6)}
-.skillgrid__col{display:flex;flex-direction:column;gap:7px}
-.skillgrid__title{
-  font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-4);
-  padding-bottom:9px;border-bottom:1px solid var(--line);margin-bottom:4px;
+/* группы навыков — карточки с обводкой и номером, чтобы на мобильном
+   заголовок группы не сливался с подписью раздела слева */
+.skillgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3)}
+.skillgrid__col{
+  display:flex;flex-direction:column;
+  padding:var(--s5);
+  border:1px solid var(--line-2);
+  border-radius:var(--r-xl);
+  background:var(--surface);
+  transition:border-color var(--mid) var(--ease),background var(--mid) var(--ease);
 }
-.skillgrid__item{font-size:15px;color:var(--text)}
+.skillgrid__col:hover{border-color:var(--accent-line);background:var(--surface-2)}
+.skillgrid__head{display:flex;align-items:center;gap:10px;margin-bottom:var(--s4)}
+.skillgrid__num{
+  font-size:11px;letter-spacing:.06em;
+  color:var(--accent);
+  background:var(--accent-soft);
+  border:1px solid var(--accent-line);
+  border-radius:var(--r-pill);
+  padding:2px 8px;
+  font-variant-numeric:tabular-nums;
+  flex:none;
+}
+.skillgrid__title{font-size:16px;font-weight:600;letter-spacing:-.01em;color:var(--text)}
+.skillgrid__item{
+  font-size:14px;color:var(--text-2);
+  padding-block:9px;
+  border-top:1px solid var(--line);
+}
 
 .toolgrid{display:flex;flex-wrap:wrap;gap:6px}
 

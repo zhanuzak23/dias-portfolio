@@ -80,12 +80,15 @@
   function skills() {
     var s = D.skills;
 
-    var cols = (s.groups || []).map(function (g) {
+    var cols = (s.groups || []).map(function (g, i) {
       var items = (g.items || []).map(function (it) {
         return '<span class="skillgrid__item">' + esc(it) + "</span>";
       }).join("");
       return '<div class="skillgrid__col">' +
-               '<div class="skillgrid__title">' + esc(g.title) + "</div>" +
+               '<div class="skillgrid__head">' +
+                 '<span class="skillgrid__num">' + String(i + 1).padStart(2, "0") + "</span>" +
+                 '<span class="skillgrid__title">' + esc(g.title) + "</span>" +
+               "</div>" +
                items +
              "</div>";
     }).join("");
