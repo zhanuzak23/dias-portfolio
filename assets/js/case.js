@@ -160,7 +160,8 @@
       UI.menubar(D) +
       "<main>" + main + "</main>" +
       UI.footer(D) +
-      UI.toastEl();
+      UI.toastEl() +
+      UI.lightboxEl();
 
     UI.initBehaviour();
   }

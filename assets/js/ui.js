@@ -45,7 +45,13 @@
     user:
       '<svg class="ico" ' + S + '><circle cx="12" cy="8.5" r="3.75"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></svg>',
     pin:
-      '<svg class="ico" ' + S + '><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>'
+      '<svg class="ico" ' + S + '><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>',
+    close:
+      '<svg class="ico" ' + S + '><path d="M6 6 18 18M18 6 6 18"/></svg>',
+    chevronLeft:
+      '<svg class="ico" ' + S + '><path d="M14.5 5.5 8 12l6.5 6.5"/></svg>',
+    chevronRight:
+      '<svg class="ico" ' + S + '><path d="M9.5 5.5 16 12l-6.5 6.5"/></svg>'
   };
 
   /* ------------------------------------------------------------ ХЕЛПЕРЫ */
@@ -162,6 +168,104 @@
     return '<div class="toast" id="toast" role="status" aria-live="polite"></div>';
   }
 
+  /* ---------------------------------------------------------- LIGHTBOX */
+  function lightboxEl() {
+    return '' +
+      '<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр изображения">' +
+        '<div class="lightbox__scroll" data-close>' +
+          '<img class="lightbox__img" id="lightboxImg" alt="">' +
+        "</div>" +
+        '<span class="lightbox__hint">Клик по картинке — реальный размер · Esc — закрыть</span>' +
+        '<button class="lightbox__btn lightbox__close" data-lb="close" aria-label="Закрыть">' + ICONS.close + "</button>" +
+        '<button class="lightbox__btn lightbox__prev" data-lb="prev" aria-label="Предыдущая">' + ICONS.chevronLeft + "</button>" +
+        '<button class="lightbox__btn lightbox__next" data-lb="next" aria-label="Следующая">' + ICONS.chevronRight + "</button>" +
+        '<div class="lightbox__bar">' +
+          '<span class="lightbox__cap" id="lightboxCap"></span>' +
+          '<span class="lightbox__count" id="lightboxCount"></span>' +
+        "</div>" +
+      "</div>";
+  }
+
+  function initLightbox() {
+    var box = qs("#lightbox");
+    if (!box) return;
+
+    var imgEl = qs("#lightboxImg");
+    var capEl = qs("#lightboxCap");
+    var cntEl = qs("#lightboxCount");
+    var items = [].slice.call(document.querySelectorAll(".figure__frame img"));
+    if (!items.length) return;
+
+    var i = 0;
+    var lastFocus = null;
+
+    function captionOf(img) {
+      var fig = img.closest("figure");
+      var cap = fig && fig.querySelector(".figure__caption");
+      return cap ? cap.textContent : (img.getAttribute("alt") || "");
+    }
+
+    function show(n) {
+      i = (n + items.length) % items.length;
+      var src = items[i];
+      box.classList.remove("is-zoom");
+      imgEl.src = src.currentSrc || src.src;
+      imgEl.alt = src.alt || "";
+      capEl.textContent = captionOf(src);
+      cntEl.textContent = i + 1 + " / " + items.length;
+      box.querySelector(".lightbox__scroll").scrollTop = 0;
+    }
+
+    function open(n) {
+      lastFocus = document.activeElement;
+      show(n);
+      box.classList.add("is-on");
+      document.body.style.overflow = "hidden";
+      box.querySelector(".lightbox__close").focus();
+    }
+
+    function close() {
+      box.classList.remove("is-on", "is-zoom");
+      document.body.style.overflow = "";
+      imgEl.removeAttribute("src");
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    items.forEach(function (img, n) {
+      var frame = img.closest(".figure__frame");
+      if (!frame) return;
+      frame.setAttribute("role", "button");
+      frame.setAttribute("tabindex", "0");
+      frame.setAttribute("aria-label", "Открыть изображение");
+      frame.addEventListener("click", function () { open(n); });
+      frame.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(n); }
+      });
+    });
+
+    box.addEventListener("click", function (e) {
+      var btn = e.target.closest("[data-lb]");
+      if (btn) {
+        var a = btn.getAttribute("data-lb");
+        if (a === "close") close();
+        if (a === "prev") show(i - 1);
+        if (a === "next") show(i + 1);
+        return;
+      }
+      /* клик по самой картинке — переключение реального размера */
+      if (e.target === imgEl) { box.classList.toggle("is-zoom"); return; }
+      /* клик по фону — закрыть */
+      if (e.target.hasAttribute("data-close")) close();
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (!box.classList.contains("is-on")) return;
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowLeft") show(i - 1);
+      if (e.key === "ArrowRight") show(i + 1);
+    });
+  }
+
   /* ------------------------------------------------------------ ПОДВАЛ */
   function footer(data) {
     return '' +
@@ -238,6 +342,8 @@
       nodes.forEach(function (n) { n.classList.add("is-in"); });
     }
 
+    initLightbox();
+
     /* переключатель «черновики» */
     var dt = qs("#draftToggle");
     if (dt) {
@@ -280,6 +386,7 @@
     prettyUrl: prettyUrl,
     menubar: menubar,
     toastEl: toastEl,
+    lightboxEl: lightboxEl,
     footer: footer,
     toast: toast,
     copyText: copyText,

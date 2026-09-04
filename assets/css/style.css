@@ -81,6 +81,8 @@ a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 ul,ol{margin:0;padding:0;list-style:none}
 h1,h2,h3,h4,p{margin:0}
+/* у figure браузерный margin 40px по бокам — из-за него картинки были уже текста */
+figure,blockquote{margin:0}
 ::selection{background:var(--accent);color:var(--accent-ink)}
 
 body::before{
@@ -401,7 +403,11 @@ body::before{
   position:relative;
   border-radius:var(--r-lg);overflow:hidden;
   background:var(--surface);border:1px solid var(--line-2);
+  transition:border-color var(--fast) var(--ease);
 }
+/* картинку можно открыть на весь экран */
+.figure__frame:has(img){cursor:zoom-in}
+.figure__frame:has(img):hover{border-color:var(--accent-line)}
 .figure__frame img{width:100%;height:auto;object-fit:cover}
 .figure__caption{font-size:12px;color:var(--text-3)}
 .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s4);align-items:start}
@@ -472,6 +478,74 @@ body.show-draft .draft::after{opacity:1}
 .btn:hover{background:var(--surface-2);border-color:var(--line-3)}
 .btn--accent{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
 .btn--accent:hover{background:var(--accent-2);border-color:var(--accent-2)}
+
+/* ---------- LIGHTBOX ------------------------------------------------------ */
+.lightbox{
+  position:fixed;inset:0;z-index:100;
+  display:none;
+  background:rgba(6,6,6,.96);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+}
+.lightbox.is-on{display:block}
+.lightbox__scroll{
+  position:absolute;inset:0;
+  overflow:auto;
+  display:flex;
+  padding:64px 20px 76px;
+  -webkit-overflow-scrolling:touch;
+}
+/* margin:auto центрирует и при этом не срезает края при зуме */
+.lightbox__img{
+  margin:auto;
+  max-width:100%;height:auto;
+  border-radius:var(--r-md);
+  border:1px solid var(--line-2);
+  background:var(--surface);
+  cursor:zoom-in;
+}
+.lightbox.is-zoom .lightbox__img{max-width:none;width:auto;cursor:zoom-out}
+
+.lightbox__bar{
+  position:absolute;left:0;right:0;bottom:0;
+  display:flex;align-items:center;gap:var(--s4);
+  padding:14px 20px;
+  background:linear-gradient(180deg,transparent,rgba(6,6,6,.9) 40%);
+  pointer-events:none;
+}
+.lightbox__cap{
+  font-size:13px;color:var(--text-2);
+  flex:1;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.lightbox__count{font-size:12px;color:var(--text-4);font-variant-numeric:tabular-nums;flex:none}
+
+.lightbox__btn{
+  position:absolute;z-index:2;
+  width:40px;height:40px;
+  display:grid;place-items:center;
+  border-radius:var(--r-sm);
+  background:rgba(32,32,32,.9);
+  border:1px solid var(--line-2);
+  color:var(--text-2);
+  transition:color var(--fast) var(--ease),background var(--fast) var(--ease);
+}
+.lightbox__btn:hover{color:var(--text);background:#2b2b2b}
+.lightbox__close{top:14px;right:14px}
+.lightbox__prev{top:50%;left:14px;transform:translateY(-50%)}
+.lightbox__next{top:50%;right:14px;transform:translateY(-50%)}
+.lightbox__hint{
+  position:absolute;top:22px;left:20px;z-index:2;
+  font-size:12px;color:var(--text-3);
+}
+
+@media (max-width:760px){
+  .lightbox__scroll{padding:56px 10px 68px}
+  .lightbox__hint{display:none}
+  .lightbox__prev{top:auto;bottom:64px;left:12px;transform:none}
+  .lightbox__next{top:auto;bottom:64px;right:12px;transform:none}
+  .lightbox__cap{white-space:normal;font-size:12px;line-height:1.4}
+}
 
 .toast{
   position:fixed;left:50%;bottom:24px;
