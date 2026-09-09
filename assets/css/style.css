@@ -434,6 +434,10 @@ body::before{
 .figure__caption{font-size:12px;color:var(--text-3)}
 .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s4);align-items:start}
 .gallery--3{grid-template-columns:repeat(3,1fr)}
+.gallery--4{grid-template-columns:repeat(4,1fr)}
+/* вертикальный скриншот телефона не растягиваем на всю ширину */
+.figure--narrow .figure__frame{max-width:420px}
+.figure--narrow .figure__caption{max-width:420px}
 .gallery .figure__frame:has(.ph){aspect-ratio:4/3}
 .gallery .figure__frame:has(.ph) img{height:100%}
 
@@ -594,7 +598,7 @@ body.show-draft .draft::after{opacity:1}
   .skillgrid{grid-template-columns:repeat(2,1fr)}
   .contactlist{grid-template-columns:repeat(2,1fr)}
   .factlist{grid-template-columns:repeat(2,1fr)}
-  .gallery--3{grid-template-columns:repeat(2,1fr)}
+  .gallery--3,.gallery--4{grid-template-columns:repeat(2,1fr)}
   .menubar__role{display:none}
 }
 @media (max-width:760px){
@@ -616,6 +620,8 @@ body.show-draft .draft::after{opacity:1}
   .exp__years{color:var(--text-3);font-size:13px}
   .contactlist{grid-template-columns:1fr}
   .gallery,.gallery--3{grid-template-columns:1fr}
+  .gallery--4{grid-template-columns:repeat(2,1fr)}
+  .figure--narrow .figure__frame,.figure--narrow .figure__caption{max-width:none}
   .stats,.factlist{grid-template-columns:repeat(2,1fr)}
   .blocks{gap:var(--s7)}
 }

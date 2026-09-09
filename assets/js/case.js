@@ -42,15 +42,29 @@
       var inner = has(b.src)
         ? '<img src="' + esc(b.src) + '" alt="' + esc(b.caption || "") + '" loading="lazy">'
         : UI.placeholder(b.hint, "Место для изображения");
-      return '<figure class="figure block reveal">' +
+      return '<figure class="figure block reveal' + (b.narrow ? " figure--narrow" : "") + '">' +
                (has(b.title) ? '<h3 class="h3 block__head">' + esc(b.title) + "</h3>" : "") +
                '<div class="figure__frame"' + (has(b.src) ? "" : ' style="aspect-ratio:16/10"') + ">" + inner + "</div>" +
                (has(b.caption) ? '<figcaption class="figure__caption">' + esc(b.caption) + "</figcaption>" : "") +
              "</figure>";
     },
 
+    /* кнопки-ссылки: живой продукт, соцсети, что угодно внешнее */
+    links: function (b) {
+      var items = (b.items || []).filter(function (l) { return has(l.href); }).map(function (l) {
+        return '<a class="btn" href="' + esc(l.href) + '" target="_blank" rel="noopener">' +
+                 esc(l.label) + " " + I.arrowUpRight +
+               "</a>";
+      }).join("");
+      if (!items) return "";
+      return '<div class="block reveal">' +
+               (has(b.title) ? '<h3 class="h3 block__head">' + esc(b.title) + "</h3>" : "") +
+               '<div class="chips">' + items + "</div>" +
+             "</div>";
+    },
+
     gallery: function (b) {
-      var cls = "gallery" + (b.columns === 3 ? " gallery--3" : "");
+      var cls = "gallery" + (b.columns === 3 ? " gallery--3" : (b.columns === 4 ? " gallery--4" : ""));
       var cells = (b.images || []).map(function (im) {
         var inner = has(im.src)
           ? '<img src="' + esc(im.src) + '" alt="' + esc(im.caption || "") + '" loading="lazy">'
