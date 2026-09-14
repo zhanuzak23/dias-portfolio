@@ -128,7 +128,6 @@
         sec(s.groupsLabel, cols ? '<div class="skillgrid">' + cols + "</div>" : "") +
         sec(s.toolsLabel, tools ? '<div class="toolgrid">' + tools + "</div>" : "") +
         sec(s.corpToolsLabel, corpTools ? '<div class="toolgrid">' + corpTools + "</div>" : "") +
-        sec(s.experienceLabel, rows(s.experience) ? '<div class="exp">' + rows(s.experience) + "</div>" : "", s.experienceDraft) +
         sec(s.educationLabel, rows(s.education) ? '<div class="exp">' + rows(s.education) + "</div>" : "", s.educationDraft) +
         sec(s.languagesLabel, (s.languages || []).length
           ? '<div class="toolgrid">' + s.languages.map(function (l) { return '<span class="chip">' + esc(l) + "</span>"; }).join("") + "</div>"
@@ -150,7 +149,7 @@
         return '<button class="contactitem" data-copy="' + esc(it.copy) + '">' + body +
                '<span class="contactitem__hint">' + I.copy + "</span></button>";
       }
-      return '<a class="contactitem" href="' + esc(it.href) + '" target="_blank" rel="noopener">' + body +
+      return '<a class="contactitem" href="' + esc(it.href) + '"' + (it.internal ? "" : ' target="_blank" rel="noopener"') + ">" + body +
              '<span class="contactitem__hint">' + I.arrowUpRight + "</span></a>";
     }).join("");
 

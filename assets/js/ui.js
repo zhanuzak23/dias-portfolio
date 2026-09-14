@@ -117,8 +117,8 @@
     var out = [];
 
     out.push({
-      key: "cv", label: "CV", value: has(c.cv) ? "Скачать PDF" : "",
-      icon: ICONS.doc, action: "link", href: c.cv, download: true
+      key: "cv", label: "CV", value: has(c.cv) ? "Посмотреть резюме" : "",
+      icon: ICONS.doc, action: "link", href: "cv.html", internal: true
     });
     out.push({
       key: "telegram", label: "Telegram", value: has(c.telegram) ? prettyUrl(c.telegram) : "",
@@ -159,8 +159,7 @@
         '" target="_blank" rel="noopener" aria-label="Написать в Telegram">' + ICONS.telegram + "</a>"
       : "";
     var cv = has(c.cv)
-      ? '<a class="menubar__cta" href="' + esc(c.cv) + '" target="_blank" rel="noopener">' +
-        ICONS.download + "<span>CV</span></a>"
+      ? '<a class="menubar__cta" href="cv.html">' + ICONS.doc + "<span>CV</span></a>"
       : "";
     var btns = tg;
     var cta = cv;

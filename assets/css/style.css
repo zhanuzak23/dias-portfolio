@@ -514,6 +514,23 @@ body.show-draft .draft::after{opacity:1}
 .btn--accent{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
 .btn--accent:hover{background:var(--accent-2);border-color:var(--accent-2)}
 
+/* ---------- CV PAGE ------------------------------------------------------- */
+.cvpage{padding-bottom:var(--s8)}
+.cvpage__head{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s4);flex-wrap:wrap;
+  margin-bottom:var(--s6);padding-bottom:var(--s4);border-bottom:1px solid var(--line);
+}
+.cvpage__sub{margin-top:6px;color:var(--text-3)}
+.cvpage__head .btn .ico{width:16px;height:16px;stroke-width:2}
+.cvpage__pages{max-width:880px;margin-inline:auto;display:flex;flex-direction:column;gap:var(--s4)}
+.cvpage__page{
+  width:100%;height:auto;display:block;
+  border-radius:var(--r-md);
+  border:1px solid var(--line-2);
+  background:#fff;
+}
+.cvpage__status{padding:var(--s7) 0;text-align:center}
+
 /* ---------- LIGHTBOX ------------------------------------------------------ */
 .lightbox{
   position:fixed;inset:0;z-index:100;
