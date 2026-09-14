@@ -317,6 +317,9 @@ body::before{
 .menubar__cta .ico{width:16px;height:16px;stroke-width:2}
 .menubar__btn--tg{color:var(--text);border:1px solid var(--line-2);margin-right:6px}
 .menubar__btn--tg:hover{border-color:var(--accent-line);color:var(--accent)}
+/* кнопка у правого края — подсказку прижимаем вправо, иначе она вылезает за экран */
+.menubar__btn--tg::after{left:auto;right:0;transform:translateY(-3px)}
+.menubar__btn--tg:hover::after{transform:translateY(0)}
 .skillgrid__title{font-size:16px;font-weight:600;letter-spacing:-.01em;color:var(--text)}
 .skillgrid__item{
   font-size:14px;color:var(--text-2);
