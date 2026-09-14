@@ -66,6 +66,8 @@
       '<svg class="ico" ' + S + '><path d="M5 4h14v10l-6 6H5z"/><path d="M13 20v-6h6"/></svg>',
     terminal:
       '<svg class="ico" ' + S + '><rect x="3" y="4.5" width="18" height="15" rx="3"/><path d="m7.5 10 2.5 2-2.5 2M12.5 14.5h4"/></svg>',
+    code:
+      '<svg class="ico" ' + S + '><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 4.5l-3 15"/></svg>',
     kanban:
       '<svg class="ico" ' + S + '><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16M15 4v16M5.5 8h1.5M11 8h1.5M11 11.5h1.5M17 8h1.5"/></svg>',
     board:

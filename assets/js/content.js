@@ -9,8 +9,8 @@
 window.CONTENT = {
 
   meta: {
-    title: "Диас Жанұзақ — Product Designer",
-    description: "Диас Жанұзақ — Product Designer. Реальные заказы: лидогенерация для CES For You и система управления цехом для Alem Brands.",
+    title: "Диас Жанұзақ — UX/UI дизайнер, Product Designer",
+    description: "Диас Жанұзақ — UX/UI дизайнер и Product Designer. Кейсы: онлайн-тест CES For You (100+ лидов за месяц), система контроля и обучения сотрудников для Alem Brands, B2B-дашборд.",
     url: "https://zhanuzak23.github.io/dias-portfolio/"
   },
 
@@ -18,24 +18,27 @@ window.CONTENT = {
   person: {
     name:     "Диас Жанұзақ",
     initials: "ДЖ",
-    role:     "Product Designer",
+    role:     "UX/UI дизайнер",
 
     photo:     "",            // фото в шапке, 800×1000
     photoHint: "800×1000",
 
-    metaLine: "Product Designer  ·  B2B, B2C  ·  Web, Mobile",
+    metaLine: "UX/UI дизайнер  ·  Product Designer  ·  B2B, B2C  ·  Web, Mobile",
 
     // одна строка — самое важное на сайте
     headline: "Проектирую интерфейсы, которые решают задачу бизнеса",
 
     // одно-два предложения. Не нужно — оставь ""
-    about: "Продуктовый дизайнер с инженерным бэкграундом. Веду продукт от постановки задачи и общения с пользователями до макетов и запуска, говорю с разработкой на одном языке. В портфолио — два реальных заказа и пример работы со сложным интерфейсом.",
+    about: "Дизайнер с инженерным бэкграундом и продуктовым мышлением. Веду продукт от интервью с пользователями и CJM до прототипа в Figma и в коде. Онлайн-тест для CES For You принёс 100+ лидов за первый месяц, для Alem Brands спроектировал систему контроля и обучения сотрудников производства.",
+
+    // кнопка под текстом — живое доказательство. Не нужна — оставь href ""
+    cta: { label: "Посмотреть работающий тест", href: "https://cesforyoutest.netlify.app" },
 
     // 3–4 коротких чипа
     highlights: [
-      "UX-исследование",
+      "Product Design",
       "B2B-системы",
-      "Мобильные сценарии",
+      "UX-исследования",
       "Прототип в коде"
     ]
   },
@@ -62,7 +65,7 @@ window.CONTENT = {
       meta:  "B2C  /  Web",
       year:  "2026",
       desc:  "Тест на уровень английского для языкового центра CES For You: результат в обмен на контакт. 100+ лидов за первый месяц с одной ссылки в Instagram.",
-      tags:  ["Реальный заказ", "Лидогенерация", "Работает"],
+      tags:  ["Проект в CES For You", "Лидогенерация", "Работает"],
 
       cover: "assets/img/cases/case-2/hero.webp",
 
@@ -73,7 +76,7 @@ window.CONTENT = {
 
       facts: [
         { k: "Роль",      v: "Продукт, интерфейс, тексты" },
-        { k: "Клиент",    v: "CES For You — реальный заказ" },
+        { k: "Компания",  v: "CES For You, менеджер продукта" },
         { k: "Статус",    v: "Работает, трафик из Instagram" },
         { k: "Результат", v: "100+ лидов за первый месяц" }
       ],
@@ -388,6 +391,14 @@ window.CONTENT = {
       { name: "ChatGPT",     icon: "chat" }
     ],
 
+    devToolsLabel: "Разработка",
+    devTools: [
+      { name: "HTML, CSS, JS",   icon: "code" },
+      { name: "Python",          icon: "terminal" },
+      { name: "Telegram-боты",   icon: "telegram" },
+      { name: "AI-assisted development", icon: "chat" }
+    ],
+
     corpToolsLabel: "Рабочие инструменты",
     corpTools: [
       { name: "Jira",             icon: "kanban" },
@@ -396,7 +407,7 @@ window.CONTENT = {
       { name: "Miro",             icon: "board" },
       { name: "Slack",            icon: "hash" },
       { name: "Google Workspace", icon: "cloud" },
-      { name: "Microsoft 365",    icon: "grid" }
+      { name: "MS Office, Excel",   icon: "grid" }
     ],
 
     // Пустой массив — блок не показывается

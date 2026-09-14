@@ -38,6 +38,10 @@
               ? '<p class="lead hero__about' + (p.aboutDraft ? " draft" : "") + '">' + esc(p.about) + "</p>"
               : "") +
             (chips ? '<div class="chips">' + chips + "</div>" : "") +
+            (p.cta && has(p.cta.href)
+              ? '<a class="btn btn--accent hero__cta" href="' + esc(p.cta.href) + '" target="_blank" rel="noopener">' +
+                  esc(p.cta.label) + " " + I.arrowUpRight + "</a>"
+              : "") +
           "</div>" +
         "</div>" +
       "</section>";
@@ -103,6 +107,7 @@
     };
     var tools = chipsOf(s.tools);
     var corpTools = chipsOf(s.corpTools);
+    var devTools = chipsOf(s.devTools);
 
     var rows = function (arr) {
       return (arr || []).map(function (r) {
@@ -127,6 +132,7 @@
         head(s.title) +
         sec(s.groupsLabel, cols ? '<div class="skillgrid">' + cols + "</div>" : "") +
         sec(s.toolsLabel, tools ? '<div class="toolgrid">' + tools + "</div>" : "") +
+        sec(s.devToolsLabel, devTools ? '<div class="toolgrid">' + devTools + "</div>" : "") +
         sec(s.corpToolsLabel, corpTools ? '<div class="toolgrid">' + corpTools + "</div>" : "") +
         sec(s.educationLabel, rows(s.education) ? '<div class="exp">' + rows(s.education) + "</div>" : "", s.educationDraft) +
         sec(s.languagesLabel, (s.languages || []).length
