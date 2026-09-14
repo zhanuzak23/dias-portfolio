@@ -66,6 +66,14 @@
       '<svg class="ico" ' + S + '><path d="M5 4h14v10l-6 6H5z"/><path d="M13 20v-6h6"/></svg>',
     terminal:
       '<svg class="ico" ' + S + '><rect x="3" y="4.5" width="18" height="15" rx="3"/><path d="m7.5 10 2.5 2-2.5 2M12.5 14.5h4"/></svg>',
+    kanban:
+      '<svg class="ico" ' + S + '><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16M15 4v16M5.5 8h1.5M11 8h1.5M11 11.5h1.5M17 8h1.5"/></svg>',
+    board:
+      '<svg class="ico" ' + S + '><rect x="3" y="4" width="18" height="13" rx="2.5"/><path d="M7 13l3-3 2.5 2L17 8M8 21l2-4M16 21l-2-4"/></svg>',
+    hash:
+      '<svg class="ico" ' + S + '><path d="M9.5 4 7.5 20M16.5 4l-2 16M4.5 9h16M3.5 15h16"/></svg>',
+    cloud:
+      '<svg class="ico" ' + S + '><path d="M7 18.5h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.2 9.6 4.5 4.5 0 0 0 7 18.5Z"/></svg>',
     chat:
       '<svg class="ico" ' + S + '><path d="M20.5 11.5a8 8 0 0 1-11.8 7L3.5 20l1.5-4.7A8 8 0 1 1 20.5 11.5Z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/></svg>'
   };

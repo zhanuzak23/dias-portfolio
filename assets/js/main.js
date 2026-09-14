@@ -94,11 +94,15 @@
              "</div>";
     }).join("");
 
-    var tools = (s.tools || []).map(function (t) {
-      var name = typeof t === "string" ? t : t.name;
-      var ico = typeof t === "string" ? "" : (I[t.icon] || "");
-      return '<span class="chip chip--tool">' + ico + esc(name) + "</span>";
-    }).join("");
+    var chipsOf = function (list) {
+      return (list || []).map(function (t) {
+        var name = typeof t === "string" ? t : t.name;
+        var ico = typeof t === "string" ? "" : (I[t.icon] || "");
+        return '<span class="chip chip--tool">' + ico + esc(name) + "</span>";
+      }).join("");
+    };
+    var tools = chipsOf(s.tools);
+    var corpTools = chipsOf(s.corpTools);
 
     var rows = function (arr) {
       return (arr || []).map(function (r) {
@@ -123,6 +127,7 @@
         head(s.title) +
         sec(s.groupsLabel, cols ? '<div class="skillgrid">' + cols + "</div>" : "") +
         sec(s.toolsLabel, tools ? '<div class="toolgrid">' + tools + "</div>" : "") +
+        sec(s.corpToolsLabel, corpTools ? '<div class="toolgrid">' + corpTools + "</div>" : "") +
         sec(s.experienceLabel, rows(s.experience) ? '<div class="exp">' + rows(s.experience) + "</div>" : "", s.experienceDraft) +
         sec(s.educationLabel, rows(s.education) ? '<div class="exp">' + rows(s.education) + "</div>" : "", s.educationDraft) +
       "</section>";
