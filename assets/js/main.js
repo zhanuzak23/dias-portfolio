@@ -130,6 +130,9 @@
         sec(s.corpToolsLabel, corpTools ? '<div class="toolgrid">' + corpTools + "</div>" : "") +
         sec(s.experienceLabel, rows(s.experience) ? '<div class="exp">' + rows(s.experience) + "</div>" : "", s.experienceDraft) +
         sec(s.educationLabel, rows(s.education) ? '<div class="exp">' + rows(s.education) + "</div>" : "", s.educationDraft) +
+        sec(s.languagesLabel, (s.languages || []).length
+          ? '<div class="toolgrid">' + s.languages.map(function (l) { return '<span class="chip">' + esc(l) + "</span>"; }).join("") + "</div>"
+          : "") +
       "</section>";
   }
 
