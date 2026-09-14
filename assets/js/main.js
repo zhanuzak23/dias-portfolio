@@ -26,10 +26,11 @@
 
     return '' +
       '<section class="hero container" id="top">' +
-        '<div class="hero__grid">' +
-          '<div class="hero__photo reveal">' +
-            UI.media(p.photo, p.name, p.photoHint, "Фото") +
-          "</div>" +
+        /* без фото блок не показываем — заглушка на живом сайте выглядит незаконченно */
+        '<div class="hero__grid' + (has(p.photo) ? "" : " hero__grid--solo") + '">' +
+          (has(p.photo)
+            ? '<div class="hero__photo reveal"><img src="' + esc(p.photo) + '" alt="' + esc(p.name) + '"></div>'
+            : "") +
           '<div class="reveal">' +
             (has(p.metaLine) ? '<div class="hero__meta">' + esc(p.metaLine) + "</div>" : "") +
             '<h1 class="display hero__title' + (p.headlineDraft ? " draft" : "") + '">' + esc(p.headline) + "</h1>" +
@@ -86,7 +87,7 @@
       }).join("");
       return '<div class="skillgrid__col">' +
                '<div class="skillgrid__head">' +
-                 '<span class="skillgrid__num">' + String(i + 1).padStart(2, "0") + "</span>" +
+                 '<span class="skillgrid__ico">' + (I[g.icon] || "") + "</span>" +
                  '<span class="skillgrid__title">' + esc(g.title) + "</span>" +
                "</div>" +
                items +
@@ -94,7 +95,9 @@
     }).join("");
 
     var tools = (s.tools || []).map(function (t) {
-      return '<span class="chip">' + esc(t) + "</span>";
+      var name = typeof t === "string" ? t : t.name;
+      var ico = typeof t === "string" ? "" : (I[t.icon] || "");
+      return '<span class="chip chip--tool">' + ico + esc(name) + "</span>";
     }).join("");
 
     var rows = function (arr) {
@@ -132,12 +135,9 @@
         '<span class="contactitem__ico">' + it.icon + "</span>" +
         "<span>" +
           '<span class="contactitem__label">' + esc(it.label) + "</span>" +
-          '<span class="contactitem__value">' + esc(has(it.value) ? it.value : "скоро") + "</span>" +
+          '<span class="contactitem__value">' + esc(it.value) + "</span>" +
         "</span>";
 
-      if (!has(it.value)) {
-        return '<button class="contactitem" disabled>' + body + "</button>";
-      }
       if (it.action === "copy") {
         return '<button class="contactitem" data-copy="' + esc(it.copy) + '">' + body +
                '<span class="contactitem__hint">' + I.copy + "</span></button>";

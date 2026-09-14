@@ -51,7 +51,23 @@
     chevronLeft:
       '<svg class="ico" ' + S + '><path d="M14.5 5.5 8 12l6.5 6.5"/></svg>',
     chevronRight:
-      '<svg class="ico" ' + S + '><path d="M9.5 5.5 16 12l-6.5 6.5"/></svg>'
+      '<svg class="ico" ' + S + '><path d="M9.5 5.5 16 12l-6.5 6.5"/></svg>',
+
+    /* навыки и инструменты */
+    target:
+      '<svg class="ico" ' + S + '><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></svg>',
+    pen:
+      '<svg class="ico" ' + S + '><path d="M12 19.5 19.5 12 22 14.5 14.5 22z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5Z"/><path d="m2 2 7.6 7.6"/><circle cx="11" cy="11" r="2"/></svg>',
+    users:
+      '<svg class="ico" ' + S + '><circle cx="9" cy="8" r="3.25"/><path d="M3 19.5a6 6 0 0 1 12 0"/><path d="M15.5 4.9a3.25 3.25 0 0 1 0 6.2M17.5 14.2a6 6 0 0 1 3.5 5.3"/></svg>',
+    figma:
+      '<svg class="ico" ' + S + '><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9h16M9 9v11"/></svg>',
+    figjam:
+      '<svg class="ico" ' + S + '><path d="M5 4h14v10l-6 6H5z"/><path d="M13 20v-6h6"/></svg>',
+    terminal:
+      '<svg class="ico" ' + S + '><rect x="3" y="4.5" width="18" height="15" rx="3"/><path d="m7.5 10 2.5 2-2.5 2M12.5 14.5h4"/></svg>',
+    chat:
+      '<svg class="ico" ' + S + '><path d="M20.5 11.5a8 8 0 0 1-11.8 7L3.5 20l1.5-4.7A8 8 0 1 1 20.5 11.5Z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/></svg>'
   };
 
   /* ------------------------------------------------------------ ХЕЛПЕРЫ */
@@ -97,10 +113,6 @@
       icon: ICONS.doc, action: "link", href: c.cv, download: true
     });
     out.push({
-      key: "linkedin", label: "LinkedIn", value: has(c.linkedin) ? prettyUrl(c.linkedin) : "",
-      icon: ICONS.linkedin, action: "link", href: c.linkedin
-    });
-    out.push({
       key: "telegram", label: "Telegram", value: has(c.telegram) ? prettyUrl(c.telegram) : "",
       icon: ICONS.telegram, action: "link", href: c.telegram
     });
@@ -113,10 +125,8 @@
       icon: ICONS.phone, action: "copy", copy: c.phone, href: has(c.phone) ? "tel:" + c.phone.replace(/[^\d+]/g, "") : ""
     });
 
-    if (has(c.behance))  out.push({ key: "behance",  label: "Behance",  value: prettyUrl(c.behance),  icon: ICONS.behance,  action: "link", href: c.behance });
-    if (has(c.dribbble)) out.push({ key: "dribbble", label: "Dribbble", value: prettyUrl(c.dribbble), icon: ICONS.dribbble, action: "link", href: c.dribbble });
-
-    return out;
+    /* пустые контакты не показываем вообще */
+    return out.filter(function (it) { return has(it.value); });
   }
 
   function prettyUrl(u) {
@@ -129,25 +139,23 @@
 
     var nav = [
       { t: "Кейсы",    href: "index.html#cases" },
-      { t: "Скиллы",   href: "index.html#skills" },
+      { t: "Навыки",   href: "index.html#skills" },
       { t: "Контакты", href: "index.html#contacts" }
     ].map(function (l) {
       return '<a class="menubar__link" href="' + esc(l.href) + '">' + esc(l.t) + "</a>";
     }).join("");
 
-    /* в баре показываем только заполненные контакты — пустые не мусорят */
-    var btns = contactList(c).filter(function (it) { return has(it.value); }).map(function (it) {
-      if (it.action === "copy") {
-        return '<button class="menubar__btn" data-tip="' + esc(it.value) + '" data-copy="' + esc(it.copy) +
-               '" aria-label="Скопировать ' + esc(it.label) + '">' + it.icon + "</button>";
-      }
-      return '<a class="menubar__btn" data-tip="' + esc(it.label) + '" href="' + esc(it.href) +
-             '" target="_blank" rel="noopener" aria-label="' + esc(it.label) + '">' + it.icon + "</a>";
-    }).join("");
-
-    var ctaHref = has(c.telegram) ? c.telegram : (has(c.email) ? "mailto:" + c.email : "index.html#contacts");
-    var ctaExt = has(c.telegram) ? ' target="_blank" rel="noopener"' : "";
-    var cta = '<a class="menubar__cta" href="' + esc(ctaHref) + '"' + ctaExt + ">Связаться</a>";
+    /* справа: Telegram для связи и кнопка CV. Пустое — не показывается */
+    var tg = has(c.telegram)
+      ? '<a class="menubar__btn menubar__btn--tg" data-tip="Написать в Telegram" href="' + esc(c.telegram) +
+        '" target="_blank" rel="noopener" aria-label="Написать в Telegram">' + ICONS.telegram + "</a>"
+      : "";
+    var cv = has(c.cv)
+      ? '<a class="menubar__cta" href="' + esc(c.cv) + '" target="_blank" rel="noopener">' +
+        ICONS.download + "<span>CV</span></a>"
+      : "";
+    var btns = tg;
+    var cta = cv;
 
     return '' +
       '<header class="menubar" id="menubar">' +
@@ -273,7 +281,6 @@
         '<div class="container footer__inner">' +
           '<span class="footer__note">' + esc(data.footer.note) + '</span>' +
           '<span class="footer__note">' + esc(data.contacts.city) + '</span>' +
-          '<button class="footer__note" id="draftToggle" style="text-decoration:underline;text-underline-offset:3px">показать черновики</button>' +
         '</div>' +
       '</footer>';
   }

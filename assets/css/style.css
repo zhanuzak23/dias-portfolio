@@ -225,6 +225,8 @@ body::before{
   border:1px solid var(--line);
 }
 .hero__photo img{width:100%;height:100%;object-fit:cover}
+.hero__grid--solo{grid-template-columns:1fr}
+.hero__grid--solo .hero__title{max-width:18ch}
 .hero__meta{color:var(--text-3);font-size:13px;margin-bottom:var(--s4)}
 .hero__title{margin-bottom:var(--s4);max-width:22ch}
 .hero__about{max-width:52ch;margin-bottom:var(--s5)}
@@ -301,16 +303,20 @@ body::before{
 }
 .skillgrid__col:hover{border-color:var(--accent-line);background:var(--surface-2)}
 .skillgrid__head{display:flex;align-items:center;gap:10px;margin-bottom:var(--s4)}
-.skillgrid__num{
-  font-size:11px;letter-spacing:.06em;
+.skillgrid__ico{
+  width:36px;height:36px;flex:none;
+  display:grid;place-items:center;
+  border-radius:var(--r-sm);
   color:var(--accent);
   background:var(--accent-soft);
   border:1px solid var(--accent-line);
-  border-radius:var(--r-pill);
-  padding:2px 8px;
-  font-variant-numeric:tabular-nums;
-  flex:none;
 }
+.chip--tool{gap:8px;padding:7px 14px 7px 10px;color:var(--text)}
+.chip--tool .ico{width:16px;height:16px;color:var(--accent)}
+.menubar__cta{gap:7px}
+.menubar__cta .ico{width:16px;height:16px;stroke-width:2}
+.menubar__btn--tg{color:var(--text);border:1px solid var(--line-2);margin-right:6px}
+.menubar__btn--tg:hover{border-color:var(--accent-line);color:var(--accent)}
 .skillgrid__title{font-size:16px;font-weight:600;letter-spacing:-.01em;color:var(--text)}
 .skillgrid__item{
   font-size:14px;color:var(--text-2);
@@ -605,7 +611,6 @@ body.show-draft .draft::after{opacity:1}
   :root{--gutter:16px;--s8:40px;--s9:48px}
   /* на телефоне в баре — только имя и кнопка; контакты живут в своём блоке */
   .menubar__nav{display:none}
-  .menubar__btn{display:none}
   .menubar__sep{display:none}
   .menubar__actions{margin-left:auto}
   .hero{padding-top:var(--s7)}
