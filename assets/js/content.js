@@ -49,7 +49,7 @@ window.CONTENT = {
     phone:    "+7 708 175 39 74",
     email:    "zhanuzak.dias@mail.ru",
     telegram: "https://t.me/zhanuzak23",
-    cv:       "assets/files/Dias_Zhanuzak_CV.pdf",
+    cv:       "assets/files/Dias_Zhanuzak_CV_2026-09.pdf",
     city:     "Алматы"
   },
 
